@@ -1,0 +1,33 @@
+/* CSS declarations go here */
+
+.user_avatar{
+	min-height:100px;
+	text-align: center;
+
+}
+.avatar_img{
+	height:75px;
+}
+
+.avatar_img2{
+	height:40px;
+}
+
+.chat-msg{
+	font-size:15px;
+}
+
+.time {
+	font-size: 10px;
+}
+
+.top-margin{
+	margin-top:200px;
+}
+
+img.emoji {
+  height: 1.3em;
+  width: 1.3em;
+  margin: 0 .05em 0 .1em;
+  vertical-align: -0.1em;
+}

@@ -1,0 +1,141 @@
+<head>
+	
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+  <title>minstant</title>
+</head>
+
+<body>
+</body>
+
+<!-- this is the main template used by iron:router to build the page -->
+<template name="ApplicationLayout">
+
+	{{> yield "header"}}
+	<div class="container">		
+	{{> yield "main"}}
+	</div>
+</template>
+
+<!-- top level template for the nav bar -->
+<template name="navbar">
+	<!--<nav class="navbar navbar-default">-->
+	<!--  <div class="container-fluid">-->
+	<!--    <div class="navbar-header">-->
+	<!--      <a class="navbar-brand" href="/">-->
+	<!--        Minstant!-->
+	<!--      </a>-->
+	<!--    </div>-->
+	<!--    <div class="nav navbar-nav nabbar-right">-->
+	<!--    	{{> loginButtons align="right"}}-->
+	<!--	</div>-->
+	<!--    <p class="navbar-text navbar-right">-->
+	<!--    	{{> loginButtons align="right"}}-->
+	<!--	</p>-->
+	<!--  </div> -->
+	<!--</nav>-->
+	
+	<nav class="navbar navbar-default">
+	  <div class="container">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span>
+	        <span class="icon-bar"></span> 
+	      </button>
+	      <a class="navbar-brand" id="brand" href="/">Mistant!</a>
+	    </div>
+	    <div class="collapse navbar-collapse" id="myNavbar">
+	      <ul class="nav navbar-nav navbar-right">
+	        <li><p class="navbar-text">{{> loginButtons align="right"}}</p></li>
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+	
+</template>
+
+<!-- Top level template for the lobby page -->
+<template name="lobby_page">
+	{{> available_user_list}}
+</template>
+
+<!-- display a list of users -->
+<template name="available_user_list">
+	<h2>Choose someone to chat with:</h2>
+	<div class="row">
+	{{#each users}}
+	{{> available_user}}
+	{{/each}}
+</div>
+</template>
+
+<!-- display an individual user -->
+<template name="available_user">
+	<div class="col-md-2">
+		<div class="user_avatar">
+			{{#if isMyUser _id}} 
+			<div class="bg-success">{{getUsername _id}} (YOU)
+				<br/>
+				<img src="/{{profile.avatar}}" class="avatar_img">			
+			</div>
+			{{else}}
+			<a href="/chat/{{_id}}">
+				{{getUsername _id}}
+				<br/>
+				<img src="/{{profile.avatar}}" class="avatar_img">
+			</a>
+			{{/if}}
+		</div>
+	</div>
+</template>
+
+
+<!-- Top level template for the chat page -->
+<template name="chat_page">
+	<h2>Type in the box below to send a message!</h2>
+	
+	<div class="row">
+		<div class="col-md-12">
+			{{#each messages}}
+			<div class="well chat-msg">
+				{{> chat_message}}
+			</div>
+			{{/each}}
+		</div>
+	</div>
+	
+    <div class="row">
+		<div class="col-md-12">
+			<form class="js-send-chat">
+				<div class="form-group">
+					<input class="input form-control" id="msgForm" type="text" name="chat" placeholder="type a message here...">
+				</div>
+				<button class="btn btn-default">send</button>
+			</form>
+			<br/>
+			<div class="js-emotic collapse" id="emotics">
+				{{#emoji}}
+					{{#each emojis}} {{emojiName}} {{/each}}
+				{{/emoji}}
+			</div>
+			<button type="button" class="btn btn-default" data-toggle="collapse" data-target="#emotics">
+				<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+				{{>emoji ":smiley:"}}
+			</button>
+		</div>
+	</div>
+</template>
+
+<!-- simple template that displays a message -->
+<template name="chat_message">
+	<div class="time">{{time}}<br/></div>
+	<img src="/{{avatar}}" class="avatar_img2">	
+	{{postedBy}} said: {{#emoji}} {{text}} {{/emoji}}
+	<br>
+</template>
+
+
+
